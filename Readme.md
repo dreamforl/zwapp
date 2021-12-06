@@ -30,7 +30,11 @@ function getdata() {
 
 ### 解释示例
 
-1. 在上述示例中，使用z-data来绑定当前组件的作用域（在zwapp中，一个z-data就是一个组件）getdata()返回的对象就是当前组件的作用域。
+1. ```html
+   <div z-data='getdata()'>
+   ```
+
+   在上述示例中，使用z-data来绑定当前组件的作用域（在zwapp中，一个z-data就是一个组件）getdata()返回的对象就是当前组件的作用域。
 
 2. 
    ```html
