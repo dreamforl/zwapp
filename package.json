@@ -1,0 +1,8 @@
+{
+  "name": "zwappp",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/dreamforl/zwapp.git",
+  "author": "为正 <1033460361@qq.com>",
+  "license": "MIT"
+}
