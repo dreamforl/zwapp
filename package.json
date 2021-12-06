@@ -4,5 +4,7 @@
   "main": "index.js",
   "repository": "https://github.com/dreamforl/zwapp.git",
   "author": "为正 <1033460361@qq.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": ["vue"],
+  "readmeFilename": "README.md"
 }
