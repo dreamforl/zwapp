@@ -1,10 +1,19 @@
 {
-  "name": "zwappp",
-  "version": "0.0.1",
+  "name": "zwapp",
+  "version": "0.0.2",
+  "description": "前端框架-学习",
   "main": "index.js",
-  "repository": "https://github.com/dreamforl/zwapp.git",
-  "author": "为正 <1033460361@qq.com>",
-  "license": "MIT",
-  "keywords": ["vue"],
-  "readmeFilename": "README.md"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamforl/zwapp.git"
+  },
+  "keywords": [
+    "前端框架"
+  ],
+  "author": "zwzwzw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dreamforl/zwapp/issues"
+  },
+  "homepage": "https://github.com/dreamforl/zwapp#readme"
 }
