@@ -33,7 +33,6 @@ function getdata() {
 1. 在上述示例中，使用z-data来绑定当前组件的作用域（在zwapp中，一个z-data就是一个组件）getdata()返回的对象就是当前组件的作用域。
 
 2. 
-
    ```html
    <h1 z-text='text'></h1>
    ```
@@ -41,7 +40,6 @@ function getdata() {
    这里绑定了z-text 意思就是，将当前作用域内的text的值，渲染为h1标签的innerText
 
 3. 
-
    ```html
    <button z-click='add'>加1</button>
    ```
