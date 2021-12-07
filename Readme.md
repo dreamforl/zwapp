@@ -6,54 +6,83 @@
 
 由于依赖于ES6的Proxy，所以不兼容IE11及以下（当然用于学习，一般都用谷歌啦）
 
-### 使用示例
+### 示例
+
+#### z-data 作用域
 
 ```html
-<div z-data='getdata()'>
-  <h1 z-text='text'></h1>
-  <button z-click='add'>加1</button>
-</div>
+<div z-data='getdata()'></div>
 ```
 
-```javascript
-function getdata() {
-  return {
-    text: 1,
-    add() {
-      // debugger
-      this.text += 1
-      console.log(this)
-    }
-  }
-}
+目前是以一个z-data为一个作用域，这个作用域中的值是通过getdata()这个函数返回的对象。
+
+####  z-bind 属性绑定
+
+```html
+<!-- 使用方式一  z-bind:name='show' -->
+<h1 z-bind:name='show'></h1>   
+<!-- 使用方式二 	:name='show' -->
+<h1 :name='show'></h1>
 ```
 
-### 解释示例
+#### z-on 事件绑定
 
-1. ```html
-   <div z-data='getdata()'>
-   ```
+```html
+<!-- 使用方式一  z-on:click='change' -->
+<h1  z-on:click='change'></h1>   
+<!-- 使用方式二 	:name='change' -->
+<h1  @click='change'></h1>
+```
 
-   在上述示例中，使用z-data来绑定当前组件的作用域（在zwapp中，一个z-data就是一个组件）getdata()返回的对象就是当前组件的作用域。
+绑定的函数，可以通过显式传递$event来获取事件对象，可以传递参数，如果未传递参数的话，默认传递事件对象
 
-2. 
-   ```html
-   <h1 z-text='text'></h1>
-   ```
+#### z-text 元素的值
 
-   这里绑定了z-text 意思就是，将当前作用域内的text的值，渲染为h1标签的innerText
+```html
+<h1 z-text='text'></h1>
+```
 
-3. 
-   ```html
-   <button z-click='add'>加1</button>
-   ```
+设置了z-text的元素，他的innerHTML会被设置为作用域内绑定的值
 
-   z-click 给button添加点击事件，事件函数也是在当前作用域内的
+#### z-show 元素显示或隐藏
+
+```html
+<h1 z-show='show'></h1>
+```
+
+根据show,来简单的切换display:none的存在与否
+
+#### z-if 元素渲染与否
+
+```html
+<h1 z-if='show'></h1>
+```
+
+#### z-model 双向数据绑定
+
+```html
+<input type="text" z-model='name'>
+```
+
+#### z-for 列表渲染
+
+```html
+<h1 z-for='item in list'></h1>
+```
+
+#### ref 存储DOM节点
+
+```html
+<h1 ref='text'></h1>
+```
+
+可以通过this.$refs.text来获取绑定的ref元素
 
 ### 缺陷
 
-1. z-data必须是一个函数而且要写成z-data='getdata()'的形式，不能省略后面的括号，后续处理一下
+由于代码较大修改，响应式全部丢失，要重新编写
 
-2. 事件处理z-click后面不能带括号，而且不能传递参数，后续会修改为可以传递参数和事件对象
-3. 目前只有z-data z-text z-click三种，后续会按照vue的使用方式添加
+后续会跟进代码修改
+
+
 
