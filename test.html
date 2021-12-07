@@ -9,19 +9,20 @@
 </head>
 
 <body>
-  <div z-data='getdata()'>
-    <h1>当前数值<span z-text='text'></span></h1>
-    <button z-click='add'>加1</button>
+
+  <div type="text" z-data='getdata()' @click='show'>
+    <h1 ref='text'> 点击</h1>
+    <h1 ref='text'>11</h1>
   </div>
   <script>
     function getdata() {
       return {
-        text: 1,
+        text: 2,
+        close: false,
         add() {
-          // debugger
-          this.text += 1
-          console.log(this)
-        }
+          this.close = !this.close;
+          console.log(this.close);
+        },
       }
     }
   </script>
