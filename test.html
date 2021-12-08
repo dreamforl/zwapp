@@ -10,18 +10,21 @@
 
 <body>
 
-  <div type="text" z-data='getdata()' @click='show'>
-    <h1 ref='text'> 点击</h1>
-    <h1 ref='text'>11</h1>
+  <div z-data='getdata()'>
+    <h1 ref='text' @click='add(close,$event)'> 点击</h1>
+    <h1 :name='count'></h1>
+    <input type="text" z-model='count'>
   </div>
   <script>
     function getdata() {
       return {
-        text: 2,
+        list: [1, 2, 3],
+        count: 2,
+        a: 1,
+        b: 2,
         close: false,
-        add() {
-          this.close = !this.close;
-          console.log(this.close);
+        add(e, a) {
+          this.count += 1
         },
       }
     }
