@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/dreamforl/zwapp.git"
   },
+  "scripts": {
+    "dev": "rollup -c"
+  },
   "keywords": [
     "前端框架"
   ],
@@ -15,5 +18,15 @@
   "bugs": {
     "url": "https://github.com/dreamforl/zwapp/issues"
   },
-  "homepage": "https://github.com/dreamforl/zwapp#readme"
+  "homepage": "https://github.com/dreamforl/zwapp#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "rollup": "^2.61.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "files":[
+    "src"
+  ]
 }

@@ -9,27 +9,37 @@
 </head>
 
 <body>
-
-  <div z-data='getdata()'>
-    <h1 ref='text' @click='add(close,$event)'> 点击</h1>
-    <h1 :name='count'></h1>
-    <input type="text" z-model='count'>
-  </div>
+  <script src='./dist/index2.js' type='module' ></script>
   <script>
     function getdata() {
       return {
-        list: [1, 2, 3],
-        count: 2,
-        a: 1,
-        b: 2,
-        close: false,
-        add(e, a) {
-          this.count += 1
+        data() {
+          return {
+            name: '1',
+            list: 2,
+          }
         },
+        methods: {
+          show() {
+            console.log(this.name);
+          },
+
+        },
+        computed: {
+          show() {
+            return 100
+          }
+        },
+        created() {
+          console.log(22222);
+        },
+        mounted() {
+          console.log('创建成');
+        }
       }
     }
+
   </script>
-  <script src='./index.js'></script>
 </body>
 
 </html>
