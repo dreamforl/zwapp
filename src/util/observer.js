@@ -1,22 +1,23 @@
 // 观察者 模式--收集依赖
-class depend {
+export class depend {
+  #dep
   constructor() {
-    this.dep_obj = {}
+    this.#dep = {}
   }
   //观察到的属性改变，执行
   change (key, value) {
-    if (this.dep_obj[key] instanceof Array) {
-      this.dep_obj[key].forEach(item => {
+    if (this.#dep[key] instanceof Array) {
+      this.#dep[key].forEach(item => {
         item(value)
       })
     }
   }
   //添加要  观察的属性
   add (key, data) {
-    if (this.dep_obj[key] instanceof Array) {
-      this.dep_obj[key].push(data)
+    if (this.#dep[key] instanceof Array) {
+      this.#dep[key].push(data)
     } else {
-      this.dep_obj[key] = [data]
+      this.#dep[key] = [data]
     }
   }
 }

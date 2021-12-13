@@ -9,7 +9,7 @@
 // {
 //   text:''
 // }
-function getDOMTree (el) {
+export function getDOMTree (el) {
   let attr = el.attributes
   let el_list = []
   let { childNodes } = el;
@@ -28,11 +28,11 @@ function getDOMTree (el) {
   }
 }
 // 渲染语法树
-function render (tree, el = null) {
-  let { attr, child, type, directive, text } = tree
+export function render (tree, el = null) {
+  let { attr, child, type, text } = tree
   if (!el && text) {
     el = document.createDocumentFragment()
-    el.textContent  = text
+    el.textContent = text
     return el
   } else if (el) {
     if (text) {

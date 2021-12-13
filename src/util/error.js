@@ -1,7 +1,7 @@
 
 // 错误的打印
-function warn (msg, expression, ...args) {
-  let str = `zwapp expression Error: ${msg}\n\n'expression':${expression}`
+export function warn (msg, expression, ...args) {
+  let str = `zwapp expression Error: ${msg}${expression ? '\n\nexpression:' + expression : ''}`
   let el_list = []
   args.forEach(item => {
     if (item instanceof HTMLElement) {

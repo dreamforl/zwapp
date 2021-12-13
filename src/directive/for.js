@@ -1,6 +1,6 @@
 // 存在问题，item没有传入
 // 设置v-for  目前仅支持v-for='item in list'这种形式
-function set_z_for (name, value, el, name_space) {
+export function set_z_for (name, value, el, name_space) {
   value = value.replace(/\s{2,}/g, ' ').trim()
   let value_list = value.split(' ')
   if (value_list.length !== 3 || value_list[1] != 'in') {

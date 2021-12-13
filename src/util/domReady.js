@@ -2,8 +2,6 @@
 export default function domReady () {
   return new Promise(resolve => {
     if (document.readyState === 'loading') {
-
-      console.log('jiazai');
       document.addEventListener('DOMContentLoaded', resolve)
     } else {
       resolve()

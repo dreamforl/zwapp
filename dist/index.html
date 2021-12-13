@@ -9,22 +9,18 @@
 </head>
 
 <body>
-  <script src='./dist/index2.js' type='module' ></script>
+  <div z-data='getdata()'>
+    <h1 z-text='name' @click='show()'></h1>
+    <input type="text" z-model='name' :age='name'>
+    <h1 z-show='if'>测试</h1>
+    <h1 ref='index'>测试</h1>
+  </div>
+  <script src='./index.js'></script>
   <script>
     function getdata() {
       return {
-        data() {
-          return {
-            name: '1',
-            list: 2,
-          }
-        },
-        methods: {
-          show() {
-            console.log(this.name);
-          },
-
-        },
+        data() { return {} },
+        methods: {},
         computed: {
           show() {
             return 100
@@ -35,7 +31,18 @@
         },
         mounted() {
           console.log('创建成');
+        },
+        computed: {
+          age() {
+            return this.name + this.list
+          }
+        },
+        watch: {
+          show: function (n, o) {
+            console.log(n, o);
+          }
         }
+
       }
     }
 

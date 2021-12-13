@@ -1,5 +1,7 @@
+import { warn } from './error'
+import { getType } from './getType'
 //初始化之前 先进行类型判断
-function initNameSpace (init_data) {
+export function initNameSpace (init_data) {
   let type = getType(init_data)
   if (type !== 'object') {
     warn('初始化函数应该返回一个对象，当前返回的是' + type)
@@ -8,7 +10,13 @@ function initNameSpace (init_data) {
   // component是当前组件的属性，this里面存储的是this可以访问的值，
   //其余的created之类的存放在与this同层级的字段里面
   let component = {
-    this: {}
+    this: {
+      $refs: {},
+    },
+
+    watch: {},
+    computed: {},
+    ifId:0
   }
   if (data) {
     if (getType(data) !== 'function') {
@@ -20,9 +28,11 @@ function initNameSpace (init_data) {
       warn('data需要是一个函数，返回一个对象.当前返回的是:' + res_type)
     }
     component.data = res
-    Object.entries(res).forEach(item => {
+    let entries = Object.entries(res)
+    entries.forEach(item => {
       component.this[item[0]] = item[1]
     })
+    // 不能重复
   }
   if (methods) {
     if (getType(methods) !== 'object') {
@@ -53,11 +63,12 @@ function initNameSpace (init_data) {
     if (getType(watch) !== 'object') {
       warn('watch需要是一个对象，内部的变量都是函数')
     }
-    object.values(watch).forEach(item => {
-      let item_type = getType(item)
+    Object.entries(watch).forEach(item => {
+      let item_type = getType(item[1])
       if (item_type !== 'function') {
         warn('watch内部需要是函数')
       }
+      component.watch[item[0]] = item[1]
     })
   }
   if (mounted) {
@@ -78,39 +89,23 @@ function initNameSpace (init_data) {
     }
     Object.entries(computed).forEach(item => {
       let item_type = getType(item[1])
-      console.log(/return/.test(item_type.toString()));
       if (item_type !== 'function') {
         warn('computed内部需要是函数,当前的是：' + item_type)
       }
       if (!(/return/.test(item[1].toString()))) {
         warn('computed内部的函数需要有返回值')
       }
-      if (data_key.includes[item[0]]) {
+      if (data_key.includes(item[0])) {
         warn('computed中的方法名，与data中不能一样,:' + item[0])
       }
-      if (methods_key.includes[item[0]]) {
-        warn('computed中的方法名，与data中不能一样,:' + item[0])
+      if (methods_key.includes(item[0])) {
+        warn('computed中的方法名，与methods中不能一样,:' + item[0])
       }
+      component.computed[item[0]] = item[1].bind(component.this)
+      component.this[item[0]] = component.computed[item[0]]()
     })
   }
   delete component.data
   delete component.methods
   return component
-}
-function warn (msg, expression, ...args) {
-  let str = `zwapp expression Error: ${msg}${expression ? '\n\nexpression:' + expression : ''}`
-  let el_list = []
-  args.forEach(item => {
-    if (item instanceof HTMLElement) {
-      el_list.push('\n\nError-Element')
-      el_list.push(item)
-    } else {
-      str += '\n\n' + item
-    }
-  })
-  console.warn(str, ...el_list);
-  throw new Error(str)
-}
-function getType (data) {
-  return Object.prototype.toString.call(data).slice(8, -1).toLowerCase()
 }
