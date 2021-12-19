@@ -1,7 +1,6 @@
 // 添加ref
 export function setRefs (el, component) {
   let el_list = el.querySelectorAll('[ref]')
-  console.log(el_list);
   for (let i = 0; i < el_list.length; i++) {
     let ref = el_list[i].getAttribute('ref')
     if (component.this.$refs[ref]) {

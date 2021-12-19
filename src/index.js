@@ -8,7 +8,7 @@ import { set_z_bind, set_z_for, set_z_if, set_z_show, set_z_model, set_z_on, set
 // 设置命名空间-根据z-data来设置  支持 z-data='getdata()'  或者z-data='getdata'
 function setNameSpace (namespace) {
   let el_list = document.querySelectorAll('[z-data]')
-  el_list.forEach((item, index) => {
+  el_list.forEach(async (item, index) => {
     let el_fun = item.getAttribute('z-data')
     el_fun = el_fun.replace(/\s/g, '')
     let perform_data
@@ -19,6 +19,12 @@ function setNameSpace (namespace) {
       perform_data = fastEval(el_fun + '()', item)
     }
     let component = initNameSpace(perform_data)
+    // created
+
+    let { created } = component
+    if (created) {
+      await created.call(component.this)
+    }
     component.name = `zw-component-${index}`
     // 依赖收集在根节点
     item.$depend = new depend()
@@ -34,7 +40,6 @@ function setNameSpace (namespace) {
     //设置this.$refs
     setRefs(item, component)
     component.this = proxy
-    console.log(component);
     item.setAttribute(component.name, '')
     // 添加 当前命名空间到namespace
     namespace.set(component.name, proxy)

@@ -16,16 +16,16 @@ export function initNameSpace (init_data) {
 
     watch: {},
     computed: {},
-    ifId:0
+    ifId: 0
   }
   if (data) {
     if (getType(data) !== 'function') {
-      warn('data需要是一个函数，返回一个对象')
+      warn('data需要是一个函数')
     }
     let res = data();
     let res_type = getType(res)
     if (res_type !== 'object') {
-      warn('data需要是一个函数，返回一个对象.当前返回的是:' + res_type)
+      warn('data函数返回一个对象.当前返回的是:' + res_type)
     }
     component.data = res
     let entries = Object.entries(res)
@@ -45,15 +45,14 @@ export function initNameSpace (init_data) {
         warn('methods中与data出现了重名字段:' + item[0])
       }
       let item_type = getType(item[1])
-      if (item_type !== 'function') {
+      if (item_type !== 'function' && item_type !== 'asyncfunction') {
         warn(`methods中的只能包含函数,而${item[0]}是:${item_type}`)
       }
       component.this[item[0]] = item[1]
     })
   }
   if (created) {
-    let item_type = getType(created)
-    if (item_type !== 'function') {
+    if (typeof created !== 'function') {
       warn('created需要是一个函数，当前的是：' + item_type)
     }
     component.created = created
@@ -64,16 +63,14 @@ export function initNameSpace (init_data) {
       warn('watch需要是一个对象，内部的变量都是函数')
     }
     Object.entries(watch).forEach(item => {
-      let item_type = getType(item[1])
-      if (item_type !== 'function') {
+      if (typeof item_type !== 'function') {
         warn('watch内部需要是函数')
       }
       component.watch[item[0]] = item[1]
     })
   }
   if (mounted) {
-    let item_type = getType(created)
-    if (item_type !== 'function') {
+    if (typeof mounted !== 'function') {
       warn('mounted需要是一个函数，返回的是一个：' + item_type)
     }
     component.mounted = mounted
@@ -89,7 +86,9 @@ export function initNameSpace (init_data) {
     }
     Object.entries(computed).forEach(item => {
       let item_type = getType(item[1])
-      if (item_type !== 'function') {
+      console.log(item_type);
+      console.log(item);
+      if (item_type !== 'function' && item_type !== 'asyncfunction') {
         warn('computed内部需要是函数,当前的是：' + item_type)
       }
       if (!(/return/.test(item[1].toString()))) {

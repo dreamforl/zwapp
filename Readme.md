@@ -10,24 +10,22 @@
 
 ### 示例
 
-均不能是表达式 必须是值
+getdata函数示例（要挂载在window上）,内部配置与vue使用方式一样
 
 ```javascript
-//getdata示例，慢慢会实现与vue的options一致，目前data、methods一致
+//getdata示例，慢慢会实现与vue的options一致
 function getdata() {
   return {
-    data() { return {} },
-    methods: {},
-    computed: {},
-    created() { },
-    mounted() { },
-    computed: {},
-    watch: {}
+    data() { return {} }, //完成
+    methods: {},  //方法放到这里
+    created() { }, //在数据获取之后执行
+    computed: {}, //未完成
+    watch: {}//未完成
   }
 }
 ```
 
-
+### 指令
 
 #### z-data 作用域
 
