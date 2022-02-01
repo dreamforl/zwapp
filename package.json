@@ -1,6 +1,6 @@
 {
 	"name": "zwapp",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "前端框架-学习",
 	"main": "./dist/index.js",
 	"repository": {
@@ -30,6 +30,6 @@
 		"rollup-plugin-terser": "^7.0.2"
 	},
 	"files": [
-		"./dist/index.js"
+		"dist"
 	]
 }
