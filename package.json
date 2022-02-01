@@ -1,8 +1,8 @@
 {
 	"name": "zwapp",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "前端框架-学习",
-	"main": "index.js",
+	"main": "./dist/index.js",
 	"repository": {
 		"type": "gitee",
 		"url": "gitee+https://gitee.com/zaoanmiao/zwapp.git"
@@ -15,7 +15,7 @@
 		"jsx"
 	],
 	"author": "zw <1033460361@qq.com>",
-	"license": "ISC",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://gitee.com/zaoanmiao/zwapp/issues"
 	},
