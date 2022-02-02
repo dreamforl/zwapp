@@ -15,7 +15,11 @@ import zwapp from 'zwapp'
 }
 ```
 
+### render
 
+```js
+render((<div>这是render</div>), document.getElementById('app'))
+```
 
 ### 类组件
 
@@ -26,6 +30,7 @@ import zwapp from 'zwapp'
 需要有render方法，返回一个要渲染的内容 ,
 
 ```jsx
+import {Component} from 'zwapp'
 class classComponent extends Component{
   constructor(props) {
 		super(props)
