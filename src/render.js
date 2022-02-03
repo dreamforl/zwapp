@@ -30,15 +30,25 @@ export default function render(node, parent) {
 		if (node.type.isClass) {
 			let classComponent = new node.type(node.props)
 			classComponent.willComponentMount() //组件将要渲染
+			classComponent.children = {
+				type:Symbol.for('document-fragement'),
+				children:node.children,
+			}  //组件的子节点
 			let dom = render(classComponent.render(), parent)
+			classComponent.dom = dom  //组件的DOM实例
 			classComponent.didComponentMounted() //组件渲染完毕
-			classComponent.dom = dom
 			return dom
 			// 类组件
 		} else {
 			render(node.type(node.props), parent)
 			//函数组件
 		}
+	}else if(node.type === Symbol.for('document-fragement')) {
+		let dom = document.createDocumentFragment()
+		node.children.forEach(item=>{
+			render(item,dom)
+		})
+		return mount(dom)
 	}
 }
 

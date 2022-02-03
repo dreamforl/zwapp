@@ -9,7 +9,7 @@ import zwapp from 'zwapp'
 ```js
 //包含
 {
-	version: '0.0.4',
+	version: '0.0.8',
 	render,
 	Component
 }
@@ -20,6 +20,27 @@ import zwapp from 'zwapp'
 ```js
 render((<div>这是render</div>), document.getElementById('app'))
 ```
+
+也可以直接给予对象
+
+```js
+{
+  type:'h1',
+  children:['h1标签'],
+  props:{className:'item',style: "color:red;background:green"}
+  //其中style也可以给一个对象{ color: 'red', background: 'green' } (jsx给的是字符串)
+}
+```
+
+会被渲染为
+
+```html
+<h1 class='item' style='color:red;background:green'>
+  h1标签
+</h1>
+```
+
+
 
 ### 类组件
 
@@ -94,6 +115,37 @@ this.setState({
 获取当前组件的DOM实例
 
 组件渲染完毕之后，可以使用this.dom可以获取
+
+#### children
+
+可以获取当前节点的子节点的jsx，用以渲染
+
+```html
+<Home name='1'>
+	<h1>测试</h1>
+</Home>
+```
+
+则子节点为 h1的jsx
+
+```js
+{
+  type:Symbol.for('document-fragement'),
+  children:[
+    {
+      type:'h1',
+      children:['测试'],
+      props:{}
+    }
+  ]
+}
+```
+
+
+
+可以直接在render()中返回，并且渲染
+
+
 
 #### 不足
 

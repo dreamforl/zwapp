@@ -23,7 +23,7 @@ export default {
     serve({
       open: true,//开启浏览器
       contentBase: './dist', //服务器启动的文件夹，默认是项目根目录，需要在该文件下创建index.html
-      port: 8020, //端口号，默认10001
+      // port: 8020, //端口号，默认10001
     }),
     livereload('dist')
 
