@@ -7,7 +7,7 @@ export default class Component {
 	static get isClass() {
 		return true
 	}
-	setState(state) {
+	setState(state, cb) {
 		if (typeof state !== 'object') {
 			console.warn('要设置的state必须是对象')
 		} else {
@@ -18,6 +18,10 @@ export default class Component {
 			this.dom = newdom
 			//完成更新
 			this.componentUpdated()
+			//允许有回调
+			if (cb instanceof Function) {
+				cb()
+			}
 		}
 	}
 	willComponentMount() {

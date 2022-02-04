@@ -9,7 +9,7 @@ import zwapp from 'zwapp'
 ```js
 //包含
 {
-	version: '0.0.8',
+	version: '0.0.9',
 	render,
 	Component
 }
@@ -38,6 +38,39 @@ render((<div>这是render</div>), document.getElementById('app'))
 <h1 class='item' style='color:red;background:green'>
   h1标签
 </h1>
+```
+
+#### 事件绑定
+
+```jsx
+<button onClick={this.add}>按钮</button>
+```
+
+#### 条件渲染
+
+```jsx
+isFirst && <h1>是</h1>
+
+isFirst ? <h1>是</h1> :<h1>否</h1>
+```
+
+#### 列表循环
+
+```jsx
+list.map(item=>{
+	return (
+  	<h1>{item}</h1>
+  )
+})
+```
+
+#### 属性绑定
+
+```jsx
+<h1 className='item'></h1>
+
+let id = 'h1'
+<h1 id={id}></h1>
 ```
 
 
@@ -107,6 +140,8 @@ let {name} = this.state
 ```js
 this.setState({
   name:'新名字'
+},()=>{
+	console.log('状态修改完成')  //可以有回调
 })
 ```
 

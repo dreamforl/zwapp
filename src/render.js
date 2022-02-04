@@ -30,7 +30,7 @@ export default function render(node, parent) {
 		if (node.type.isClass) {
 			let classComponent = new node.type(node.props)
 			classComponent.willComponentMount() //组件将要渲染
-			classComponent.children = {
+			classComponent.children = { //允许直接渲染组件的子节点
 				type:Symbol.for('document-fragement'),
 				children:node.children,
 			}  //组件的子节点
