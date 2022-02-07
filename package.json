@@ -1,35 +1,42 @@
 {
-	"name": "zwapp",
-	"version": "0.0.9",
-	"description": "前端框架-学习",
-	"main": "./dist/index.js",
-	"repository": {
-		"type": "gitee",
-		"url": "gitee+https://gitee.com/zaoanmiao/zwapp.git"
-	},
-	"scripts": {
-		"dev": "rollup -wc"
-	},
-	"keywords": [
-		"前端框架",
-		"jsx"
-	],
-	"author": "zw <1033460361@qq.com>",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://gitee.com/zaoanmiao/zwapp/issues"
-	},
-	"homepage": "https://gitee.com/zaoanmiao/zwapp#readme",
-	"dependencies": {},
-	"devDependencies": {
-		"@babel/core": "^7.16.0",
-		"rollup": "^2.61.1",
-		"rollup-plugin-babel": "^4.4.0",
-		"rollup-plugin-livereload": "^2.0.5",
-		"rollup-plugin-serve": "^1.1.0",
-		"rollup-plugin-terser": "^7.0.2"
-	},
-	"files": [
-		"dist"
-	]
+  "name": "zwapp",
+  "version": "0.0.9",
+  "description": "前端框架-学习",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "gitee",
+    "url": "gitee+https://gitee.com/zaoanmiao/zwapp.git"
+  },
+  "scripts": {
+    "dev": "rollup -wc",
+    "commit": "git-cz"
+  },
+  "keywords": [
+    "前端框架",
+    "jsx"
+  ],
+  "author": "zw <1033460361@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitee.com/zaoanmiao/zwapp/issues"
+  },
+  "homepage": "https://gitee.com/zaoanmiao/zwapp#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "commitizen": "^4.2.4",
+    "rollup": "^2.61.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  }
 }

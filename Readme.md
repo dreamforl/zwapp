@@ -176,9 +176,19 @@ this.setState({
 }
 ```
 
-
-
 可以直接在render()中返回，并且渲染
+
+#### ref
+
+不支持字符串形式的ref，支持函数形式的
+
+```jsx
+<input type='text' ref={dom=>{this.ref.input = dom}}>
+```
+
+只要继承自Component的组件，ref都是对象
+
+
 
 
 
