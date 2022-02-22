@@ -32,7 +32,6 @@ export default function render(node, parent) {
     if (node.type.isClass) {
       renderClass(node, parent);
     } else {
-      console.log(node, parent);
       renderFunction(node, parent);
     }
   } else if (type === "function") {
