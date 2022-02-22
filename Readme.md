@@ -9,7 +9,7 @@ import zwapp from "zwapp";
 ```js
 //包含
 {
-  version: "0.0.11", render, Component;
+  version: "0.0.12", render, Component;
 }
 ```
 

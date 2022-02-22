@@ -1,5 +1,5 @@
 export declare namespace zwapp {
-  type version = string;
+  type Version = string;
   interface render {}
   interface Component {
     setState: Function;
@@ -11,4 +11,7 @@ export declare namespace zwapp {
     props: Object;
     state: Object;
   }
+  let version: Version;
+  function render(): Object;
+  class Component {}
 }
