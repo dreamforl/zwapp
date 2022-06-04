@@ -1,5 +1,6 @@
 //需要返回dom，因为要绑定到类组件上面
 export default function render(node, parent) {
+  if(!node) return
   const type = typeof node;
   const mount = parent ? (el) => parent.appendChild(el) : (el) => el;
   if (type === "string" || type === "number") {
@@ -82,8 +83,10 @@ function renderClass(node, parent) {
     type: Symbol.for("document-fragement"),
     children: node.children,
   }; //组件的子节点
+  classComponent._rendering = true // 正在更新
   let dom = render(classComponent.render(), parent);
   classComponent.dom = dom; //组件的DOM实例
+  classComponent._rendering = false // 更新完毕
   classComponent.didComponentMounted(); //组件渲染完毕
   return dom;
   // 类组件
