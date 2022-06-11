@@ -1,3 +1,2 @@
-/node_modules
-/dist
-.vscode
+test.html
+node_modules
