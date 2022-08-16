@@ -5,10 +5,10 @@ export class depend {
     this.#dep = {}
   }
   //观察到的属性改变，执行
-  change (key, value) {
+  change (key, value, oldValue) {
     if (this.#dep[key] instanceof Array) {
       this.#dep[key].forEach(item => {
-        item(value)
+        item(value, oldValue)
       })
     }
   }

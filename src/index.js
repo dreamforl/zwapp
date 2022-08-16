@@ -33,7 +33,7 @@ function setNameSpace (namespace) {
     component.this.$el = item
     let proxy = new Proxy(component.this, {
       set (target, key, value) {
-        item.$depend.change(key, value)
+        item.$depend.change(key, value , Reflect.get(target,key))
         return Reflect.set(target, key, value)
       }
     })
