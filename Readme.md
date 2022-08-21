@@ -102,8 +102,24 @@ class classComponent extends Component {
 #### 生命周期
 
 1. willComponentMount 组件将要渲染
+
 2. didComponentMounted 组件渲染完毕
-3. componentUpdated 组件更新完毕
+
+3. shouldComponentUpdate(nextState):void boolean 是否组件更新（默认是更新，返回false就是不更新，其余都是更新）
+
+   ```js
+   shouldComponentUpdate(nextState) {
+       if (nextState.count > 5) {
+         return false
+       }
+   }
+   ```
+
+   
+
+4. componentWillUpdate(nextState):组件即将更新
+
+5. componentUpdated 组件更新完毕
 
 #### props
 
