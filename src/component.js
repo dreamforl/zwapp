@@ -4,8 +4,11 @@ export default class Component {
     this.props = props || {};
     this.state = {};
     this.ref = {};
-    this._renderList = [] // setState的列表
-    this._rendering = false // 是否正在更新
+    this._renderObject = {
+      state: {},
+      list: [],
+    }; // setState的列表
+    this._rendering = false; // 是否正在更新
   }
   static get isClass() {
     return true;
@@ -16,40 +19,51 @@ export default class Component {
     } else {
       // 如果正在更新，就push进列表，下次更新
       if (this._rendering) {
-        this._renderList.push({
-          state, cb
-        })
+        this._renderObject.state = Object.assign(
+          this._renderObject.state,
+          state
+        );
+        this._renderObject.list.push(cb);
       } else {
         // 如果当前没有更新，就更新列表置空，执行更新
-        this._rendering = true
-        let list = this._renderList
+        this._rendering = true;
+        const { list } = this._renderObject;
         setTimeout(() => {
-          this._renderList = []
-          list.push({
-            state,cb
-          })
-          list.forEach(item => {
-            Object.assign(this.state, item.state);
-          })
+          state = Object.assign(state, this._renderObject.state);
+          const isUpdate = this.shouldComponentUpdate(state)
+          if (isUpdate === false) {
+            this._renderObject = {
+              state: {},
+              list: [],
+            };
+            return (this._rendering = false);
+          }
+          this.componentWillUpdate(state);
+          this._renderObject.list = [];
+          list.push(cb);
+          this.state = Object.assign(this.state, state);
           let newdom = render(this.render());
           //全量替换
           this.dom.replaceWith(newdom);
           this.dom = newdom;
           //完成更新
           this.componentUpdated();
-          this._rendering = false
+          this._rendering = false;
           //允许有回调
-          list.forEach(item => {
-            if (item.cb instanceof Function) {
-              item.cb();
+          list.forEach((item) => {
+            if (item instanceof Function) {
+              item();
             }
-          })
-        })
+          });
+        });
       }
-
     }
   }
-  willComponentMount() { }
-  didComponentMounted() { }
-  componentUpdated() { }
+  willComponentMount() {}
+  didComponentMounted() {}
+  componentUpdated() {}
+  componentWillUpdate() {}
+  shouldComponentUpdate(nextState) {
+    return true;
+  }
 }
