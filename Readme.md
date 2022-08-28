@@ -1,245 +1,119 @@
-## zwapp 框架
+### zwapp框架
 
-本框架主要用于学习使用,感谢微信公众号 ==神光的编程秘籍==
+本框架主要用于学习使用
 
-```js
-import zwapp from "zwapp";
-```
+本人是vue的爱好者，之前看到了[alpinejs](https://www.alpinejs.cn/)这个库，感觉写的很好，自己也想写一个类似的，这样各种知识也可以融会贯通了
 
-```js
-//包含
-{
-  version: "0.0.12", render, Component;
-}
-```
+由于依赖于ES6的Proxy，所以不兼容IE11及以下（当然用于学习，一般都用谷歌啦）
 
-### render
 
-```js
-render(<div>这是render</div>, document.getElementById("app"));
-```
 
-也可以直接给予对象
+### 示例
 
-```js
-{
-  type:'h1',
-  children:['h1标签'],
-  props:{className:'item',style: "color:red;background:green"}
-  //其中style也可以给一个对象{ color: 'red', background: 'green' } (jsx给的是字符串)
-}
-```
+getdata函数示例（要挂载在window上）,内部配置与vue使用方式一样
 
-会被渲染为
-
-```html
-<h1 class="item" style="color:red;background:green">h1标签</h1>
-```
-
-#### 事件绑定
-
-```jsx
-<button onClick={this.add}>按钮</button>
-```
-
-#### 条件渲染
-
-```jsx
-isFirst && <h1>是</h1>;
-
-isFirst ? <h1>是</h1> : <h1>否</h1>;
-```
-
-#### 列表循环
-
-```jsx
-list.map((item) => {
-  return <h1>{item}</h1>;
-});
-```
-
-#### 属性绑定
-
-```jsx
-<h1 className='item'></h1>
-
-let id = 'h1'
-<h1 id={id}></h1>
-```
-
-### 类组件
-
-基本功能已经实现。
-
-需要继承 zwapp.Component
-
-需要有 render 方法，返回一个要渲染的内容 ,
-
-```jsx
-import { Component } from "zwapp";
-class classComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 1,
-      name: "李四",
-    };
-  }
-  render() {
-    let { name } = props;
-    let { count } = this.state;
-    return (
-      <div>
-        <h1>{count}</h1>
-        <h1 onClick={this.show}>类组件{name}</h1>
-        <button onClick={this.add}>+1</button>
-      </div>
-    );
-  }
-}
-```
-
-#### 生命周期
-
-1. willComponentMount 组件将要渲染
-2. didComponentMounted 组件渲染完毕
-3. componentUpdated 组件更新完毕
-
-#### props
-
-可以传递属性给组件（任意属性都可以）
-
-```html
-<ClassComponent name="类组件"></ClassComponent>
-```
-
-则传递了 props: {name:'类组件'} 给类组件
-
-使用 this.props 可以获取
-
-#### state
-
-单个组件的状态管理，要求是对象
-
-##### 使用状态
-
-```js
-let { name } = this.state;
-```
-
-##### 修改状态
-
-```js
-this.setState(
-  {
-    name: "新名字",
-  },
-  () => {
-    console.log("状态修改完成"); //可以有回调
-  }
-);
-```
-
-#### dom
-
-获取当前组件的 DOM 实例
-
-组件渲染完毕之后，可以使用 this.dom 可以获取
-
-#### children
-
-可以获取当前节点的子节点的 jsx，用以渲染
-
-```html
-<Home name="1">
-  <h1>测试</h1>
-</Home>
-```
-
-则子节点为 h1 的 jsx
-
-```js
-{
-  type:Symbol.for('document-fragement'),
-  children:[
-    {
-      type:'h1',
-      children:['测试'],
-      props:{}
-    }
-  ]
-}
-```
-
-可以直接在 render()中返回，并且渲染
-
-#### ref
-
-不支持字符串形式的 ref，支持函数形式的
-
-```jsx
-<input type='text' ref={dom=>{this.ref.input = dom}}>
-```
-
-只要继承自 Component 的组件，ref 都是对象
-
-#### 不足
-
-现在是全量更新，性能较差，后续使用 diff 比较
-
-### 函数组件
-
-函数需要返回要渲染的内容。(未实现响应式)
-
-```jsx
-function functionComponent(props) {
-  let { name } = props;
-  return <div>这是function组件----{name}</div>;
-}
-```
-
-```html
-<Function name="函数"></Function>
-```
-
-### webpack 配置 jsx
-
-#### 安装 loader
-
-1. @babel/core
-2. @babel/preset-react
-3. babel-loader
-
-#### 配置 loader
-
-```webpack.config.js
-{
-	test: /\.js(|x)$/i,
-	use: {
-		loader: 'babel-loader',
-		options: {
-			presets: [
-				['@babel/preset-react',
-					{
-						pragma: 'createElement'
-					}
-				]
-			],
-		}
-	},
-	exclude: '/node_modules'
-}
-```
-
-#### 添加全局性的方法 createElement
-
-```js
-const createElement = (type, props, ...children) => {
-  if (props === null) props = {};
+```javascript
+//getdata示例，慢慢会实现与vue的options一致
+function getdata() {
   return {
-    type,
-    props,
-    children,
-  };
-};
+    data() { return {} }, //完成
+    methods: {},  //方法放到这里
+    created() { }, //在数据获取之后执行
+    computed: {}, //未完成
+    watch: {}//未完成
+  }
+}
 ```
+
+### 指令
+
+#### z-data 作用域
+
+```html
+<div z-data='getdata()'></div>
+```
+
+目前是以一个z-data为一个作用域，这个作用域中的值是通过getdata()这个函数返回的对象。（可以不带括号）
+
+已经实现
+
+#### z-if 元素渲染与否
+
+```html
+<h1 z-if='show'></h1>
+```
+
+存在问题-当移除元素之后，不知道应该如何添加
+
+#### z-show 元素显示或隐藏
+
+```html
+<h1 z-show='show'></h1>
+```
+
+根据show,来简单的切换display:none的存在与否
+
+已经实现
+
+####  z-bind 属性绑定
+
+```html
+<!-- 使用方式一  z-bind:name='show' -->
+<h1 z-bind:name='show'></h1>   
+<!-- 使用方式二 	:name='show' -->
+<h1 :name='show'></h1>
+```
+
+已经实现
+
+#### z-on 事件绑定
+
+```html
+<!-- 使用方式一  z-on:click='change' -->
+<h1  z-on:click='change'></h1>   
+<!-- 使用方式二 	:name='change' -->
+<h1  @click='change'></h1>
+```
+
+绑定的函数，可以通过显式传递$event来获取事件对象，可以传递参数，如果未传递参数的话，默认传递事件对象
+
+已经实现
+
+#### z-text 元素的值
+
+```html
+<h1 z-text='text'></h1>
+```
+
+设置了z-text的元素，他的innerHTML会被设置为作用域内绑定的值
+
+已经实现
+
+#### z-model 双向数据绑定
+
+```html
+<input type="text" z-model='name'>
+```
+
+已经实现
+
+#### z-for 列表渲染
+
+```html
+<h1 z-for='item in list'></h1>
+```
+
+未实现
+
+#### ref 存储DOM节点
+
+```html
+<h1 ref='h1'></h1>
+```
+
+```javascript
+this.$refs.h1  //获取当前组件内绑定的dom
+```
+
+已经实现
+
