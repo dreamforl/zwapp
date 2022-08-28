@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class='main' z-data='getdata()'>
+    <div class="card">
+      <div class='title'>z-text实例</div>
+      <div class="value" z-text='name'></div>
+    </div>
+    <div class="card">
+      <div class="title">z-model示例</div>
+      <input type="text" z-model='name'>
+    </div>
+    <div class="card">
+      <div class="title"> z-show示例</div>
+      <div class="value" z-show='logo'>这是z-show</div>
+    </div>
+    <div class="card">
+      <div class="title"> z-bind示例</div>
+      <div class="value" :class="name" :title="name">这是z-bind</div>
+    </div>
+    <div class="card">
+      <div class="title"> z-onshow示例</div>
+      <div class="value" @click='show'>这是z-show</div>
+    </div>
+    <div class="card">
+      <div class="title"> red示例</div>
+      <div class="value" ref='logo' @click="show2">这是ref,点击输出当前节点</div>
+    </div>
+  </div>
+
+  <script src='./index.js'></script>
+  <script>
+    function getdata() {
+      return {
+        data() {
+          return {
+            name: '张三',
+            logo: true,
+          }
+        },
+        methods: {
+          show() {
+            console.log(111);
+          },
+          show2() {
+            console.log(this.$refs.logo);
+          }
+        },
+        async created() {
+          console.log('created');
+        },
+        mounted() {
+          console.log('mounted');
+        },
+        watch: {}
+      }
+    }
+
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      color: #282828;
+      transition: all .3s ease-in-out;
+    }
+
+    .main {
+      margin: 100px auto;
+      width: 50%;
+      padding: 15px;
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 3px #ccc;
+      border-radius: 8px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 3px #ccc;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .title {
+      text-shadow: 0 0 3px #ccc;
+      color: black;
+      margin-bottom: 10px;
+    }
+  </style>
+</body>
+
+</html>
