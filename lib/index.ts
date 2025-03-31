@@ -13,6 +13,7 @@ export type {
   FragmentProps,
   FragmentType,
   HTMLAttributes,
+  JSX,
 } from "./types";
 
 // 导出 Fragment Symbol

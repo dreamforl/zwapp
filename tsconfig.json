@@ -9,6 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "emitDeclarationOnly": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -16,9 +17,6 @@
     "noEmit": true,
     "outDir": "./dist",
     "noImplicitThis": false,
-    "jsx": "react",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
     "typeRoots": ["./node_modules/@types", "./lib/types"],
     "paths": {
       "@/*": ["lib/*"]

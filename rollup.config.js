@@ -3,7 +3,7 @@ import babel from "@rollup/plugin-babel";
 import { version } from "./package.json";
 import typescript from "@rollup/plugin-typescript";
 import json from "@rollup/plugin-json";
-
+import resolve from "@rollup/plugin-node-resolve";
 const banner =
   "/*!\n" +
   ` * tools v${version}\n` +
@@ -32,9 +32,14 @@ export default {
     },
   ],
   plugins: [
+    resolve({
+      extensions: [".js", ".ts"],
+    }),
     json(),
     typescript({
       tsconfig: "./tsconfig.json",
+      // declaration: true,
+      // declarationDir: "./dist/types",
       rootDir: "./lib",
       outDir: "./dist",
     }),
@@ -43,6 +48,10 @@ export default {
       extensions: [".ts", ".tsx"],
       babelHelpers: "bundled",
     }),
-    terser(),
+    terser({
+      compress: {
+        // drop_console: true //关闭console
+      },
+    }),
   ],
 };

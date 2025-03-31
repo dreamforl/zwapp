@@ -30,24 +30,21 @@ export type FragmentType = {
 
 export type Component<P = {}> = (props: P & { children?: VNode[] }) => VNode;
 
-// 全局 JSX 命名空间
-declare global {
-  namespace JSX {
-    interface Element extends VNode {}
-
-    interface IntrinsicElements {
-      [elemName: string]: Props;
-    }
-
-    interface ElementChildrenAttribute {
-      children: {};
-    }
-
-    interface IntrinsicAttributes {
-      key?: string | number;
-    }
-  }
+export interface JSX {
+  Element: VNode;
+  IntrinsicElements: Record<string, Props>;
+  ElementChildrenAttribute: {
+    children: {};
+  };
+  IntrinsicAttributes: {
+    key?: string | number;
+  };
 }
+
+// 全局 JSX 命名空间
+// declare global {
+//   // export namespace JSX
+// }
 
 // zwapp 命名空间
 declare namespace zwapp {
