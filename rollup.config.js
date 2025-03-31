@@ -1,27 +1,47 @@
-import serve from "rollup-plugin-serve";
-import livereload from "rollup-plugin-livereload";
-import { terser } from "rollup-plugin-terser";
-import babel from "rollup-plugin-babel";
+import terser from "@rollup/plugin-terser";
+import babel from "@rollup/plugin-babel";
+import { version } from "./package.json";
+import typescript from "@rollup/plugin-typescript";
+import json from "@rollup/plugin-json";
+
+const banner =
+  "/*!\n" +
+  ` * tools v${version}\n` +
+  ` * (c) 2022-${new Date().getFullYear()} zhenwei\n` +
+  " * Released under the MIT License.\n" +
+  " */";
+
 export default {
-  input: "src/index.js",
-  output: {
-    file: "dist/index.js",
-    format: "umd",
-    name: "zwapp", //暴露全局变量为zwapp
-  },
+  input: "lib/index.ts",
+  output: [
+    {
+      file: "dist/index.umd.js",
+      format: "umd",
+      name: "zwapp",
+      banner,
+      sourcemap: true,
+      exports: "named",
+    },
+    {
+      file: "dist/index.js",
+      format: "es",
+      name: "zwapp",
+      banner,
+      sourcemap: true,
+      exports: "named",
+    },
+  ],
   plugins: [
+    json(),
+    typescript({
+      // tsconfig: "./tsconfig.json",
+      // declaration: true,
+      // declarationDir: "./dist/types"
+    }),
     babel({
       exclude: "node_modules/**",
+      extensions: [".ts", ".tsx"],
     }),
-    terser({
-      compress: {
-        // drop_console: true //关闭console
-      },
-    }),
-    serve({
-      contentBase: "./dist", //服务器启动的文件夹，默认是项目根目录，需要在该文件下创建index.html
-      // port: 8020, //端口号，默认10001
-    }),
-    livereload("dist"),
+    terser(),
   ],
 };
