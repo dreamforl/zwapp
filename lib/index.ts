@@ -2,6 +2,15 @@ import { h, render } from "./h";
 import { Fragment } from "./fragment";
 import pkg from "../package.json";
 import { FRAGMENT_NODE } from "./data";
+import type {
+  VNode,
+  Props,
+  Component,
+  FragmentProps,
+  FragmentType,
+  HTMLAttributes,
+} from "./types/index";
+
 // 导出核心 API
 export { h, Fragment, render };
 
@@ -13,8 +22,7 @@ export type {
   FragmentProps,
   FragmentType,
   HTMLAttributes,
-  JSX,
-} from "./types";
+};
 
 // 导出 Fragment Symbol
 export { FRAGMENT_NODE };
