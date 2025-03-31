@@ -41,6 +41,7 @@ export default {
     babel({
       exclude: "node_modules/**",
       extensions: [".ts", ".tsx"],
+      babelHelpers: "bundled",
     }),
     terser(),
   ],
