@@ -1,4 +1,4 @@
-import type { VNode } from "./types";
+import type { HType, VNode } from "./types";
 import { FRAGMENT_NODE, TEXT_NODE } from "./data";
 
 function createTextVNode(text: string | number): VNode {
@@ -9,11 +9,7 @@ function createTextVNode(text: string | number): VNode {
   };
 }
 
-export const h = (
-  type: VNode["type"],
-  props: VNode["props"] | null,
-  ...children: any[]
-): VNode => {
+export const h: HType = (type, props, ...children: any[]): VNode => {
   // 处理 Fragment 的特殊情况
   if (type === FRAGMENT_NODE) {
     return {

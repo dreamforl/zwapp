@@ -11,6 +11,12 @@ import type {
   HTMLAttributes,
 } from "./types";
 
+// 添加全局变量
+if (window && typeof window === "object") {
+  window.h = h;
+  window.Fragment = Fragment;
+}
+
 // 导出核心 API
 export { h, Fragment, render };
 
@@ -27,14 +33,7 @@ export type {
 // 导出 Fragment Symbol
 export { FRAGMENT_NODE };
 
-export interface Zwapp {
-  version: string;
-  h: typeof h;
-  Fragment: typeof Fragment;
-  render: typeof render;
-}
-
-const zwapp: Zwapp = {
+const zwapp = {
   version: pkg.version,
   h,
   Fragment,
