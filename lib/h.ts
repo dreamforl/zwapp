@@ -19,7 +19,7 @@ export const h = (
     return {
       type: FRAGMENT_NODE,
       props: {},
-      children: children.flat().filter(Boolean)
+      children: children.flat().filter(Boolean),
     };
   }
 
@@ -81,14 +81,21 @@ function createDom(vnode: VNode): Node {
 export function render(vnode: VNode, container: HTMLElement) {
   // 清空容器
   container.innerHTML = "";
-  
   // 创建 DOM
   const dom = createDom(vnode);
-
   // 递归渲染子节点
-  if (vnode.children) {
+  if (Array.isArray(vnode?.children)) {
     vnode.children.forEach((child) => {
-      if (child) {
+      if (Array.isArray(child)) {
+        render(
+          {
+            type: FRAGMENT_NODE,
+            children: child,
+            props: {},
+          },
+          dom as HTMLElement
+        );
+      } else if (child && typeof child === "object") {
         render(child, dom as HTMLElement);
       }
     });
