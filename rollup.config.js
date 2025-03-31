@@ -1,27 +1,15 @@
-import serve from "rollup-plugin-serve";
-import livereload from "rollup-plugin-livereload";
-import { terser } from "rollup-plugin-terser";
-import babel from "rollup-plugin-babel";
-export default {
-  input: "src/index.js",
-  output: {
-    file: "dist/index.js",
-    format: "umd",
-    name: "zwapp", //暴露全局变量为zwapp
-  },
-  plugins: [
-    babel({
-      exclude: "node_modules/**",
-    }),
-    terser({
-      compress: {
-        // drop_console: true //关闭console
-      },
-    }),
-    serve({
-      contentBase: "./dist", //服务器启动的文件夹，默认是项目根目录，需要在该文件下创建index.html
-      // port: 8020, //端口号，默认10001
-    }),
-    livereload("dist"),
-  ],
-};
+import config from "./config/rollup.config";
+export default async function build() {
+  await new Promise((resolve, reject) => {
+    const child_process = require("child_process");
+    child_process.exec("npx rimraf dist", (error) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
+  return config;
+}
