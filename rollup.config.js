@@ -34,9 +34,9 @@ export default {
   plugins: [
     json(),
     typescript({
-      // tsconfig: "./tsconfig.json",
-      // declaration: true,
-      // declarationDir: "./dist/types"
+      tsconfig: "./tsconfig.json",
+      rootDir: "./lib",
+      outDir: "./dist",
     }),
     babel({
       exclude: "node_modules/**",
