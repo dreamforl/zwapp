@@ -3,7 +3,7 @@ import babel from "@rollup/plugin-babel";
 import { version } from "../package.json";
 import typescript from "@rollup/plugin-typescript";
 import json from "@rollup/plugin-json";
-import resolve from "@rollup/plugin-node-resolve";
+import copy from 'rollup-plugin-copy';
 
 const banner =
   "/*!\n" +
@@ -33,22 +33,29 @@ export default {
     },
   ],
   plugins: [
-    resolve({
-      extensions: [".js", ".ts"],
-    }),
     json(),
     typescript({
       tsconfig: "./tsconfig.json",
+      
     }),
     babel({
       exclude: "node_modules/**",
-      extensions: [".ts", ".tsx", ".d.ts"],
+      extensions: [".ts", ".tsx"],
       babelHelpers: "bundled",
     }),
     terser({
       compress: {
         // drop_console: true //关闭console
       },
+    }),
+    copy({
+      targets: [
+        { 
+          src: 'lib/types/index.d.ts', 
+          dest: 'dist/types',
+          rename: 'types.ts'
+        }
+      ]
     }),
   ],
 };

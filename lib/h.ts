@@ -74,7 +74,6 @@ function createDom(vnode: VNode): Node {
       dom.setAttribute(name, value as string);
     }
   });
-
   return dom;
 }
 

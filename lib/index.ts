@@ -9,7 +9,7 @@ import type {
   FragmentProps,
   FragmentType,
   HTMLAttributes,
-} from "./types/index";
+} from "./types";
 
 // 导出核心 API
 export { h, Fragment, render };
@@ -27,7 +27,14 @@ export type {
 // 导出 Fragment Symbol
 export { FRAGMENT_NODE };
 
-const zwapp = {
+export interface Zwapp {
+  version: string;
+  h: typeof h;
+  Fragment: typeof Fragment;
+  render: typeof render;
+}
+
+const zwapp: Zwapp = {
   version: pkg.version,
   h,
   Fragment,

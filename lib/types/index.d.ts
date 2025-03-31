@@ -50,4 +50,4 @@ declare global {
 }
 
 // 为了支持 JSX 语法，需要确保这些类型在全局范围内可用
-export as namespace zwapp;
+// export as namespace zwapp; 
