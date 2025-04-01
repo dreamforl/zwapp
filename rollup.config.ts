@@ -1,4 +1,4 @@
-import config from "./config/rollup.config";
+import config from "./config/rollup.config.ts";
 export default async function build() {
   await new Promise((resolve, reject) => {
     const child_process = require("child_process");
@@ -8,7 +8,7 @@ export default async function build() {
         reject(error);
         return;
       }
-      resolve();
+      resolve(0);
     });
   });
   return config;
