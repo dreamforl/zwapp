@@ -1,8 +1,12 @@
 import { FRAGMENT_NODE, TEXT_NODE } from "./data";
-import { VNode } from "./types";
+import { VNodeChildren } from "./types";
+import { isVNode } from "./utils/type";
 
 // 创建 DOM 元素
-function createDom(vnode: VNode): Node {
+function createDom(vnode: VNodeChildren): Node {
+  if (!isVNode(vnode)) {
+    return document.createTextNode(vnode ? `${vnode}` : "");
+  }
   // 处理文本节点
   if (vnode.type === TEXT_NODE) {
     return document.createTextNode(vnode.props.nodeValue);
@@ -38,15 +42,14 @@ function createDom(vnode: VNode): Node {
 }
 
 // 渲染函数
-export function render(vnode: VNode, container: HTMLElement) {
+export function render(vnode: VNodeChildren, container: HTMLElement) {
   // 这里需要实现虚拟 DOM 到真实 DOM 的转换逻辑
   // 包括处理组件实例化、DOM 元素创建、属性更新等
   // 清空容器
   container.innerHTML = "";
   // 创建 DOM
   const dom = createDom(vnode);
-  // 递归渲染子节点
-  if (Array.isArray(vnode?.children)) {
+  if (isVNode(vnode) && Array.isArray(vnode?.children)) {
     vnode.children.forEach((child) => {
       if (Array.isArray(child)) {
         render(
@@ -57,7 +60,7 @@ export function render(vnode: VNode, container: HTMLElement) {
           },
           dom as HTMLElement
         );
-      } else if (child && typeof child === "object") {
+      } else {
         render(child, dom as HTMLElement);
       }
     });

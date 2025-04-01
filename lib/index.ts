@@ -3,14 +3,8 @@ import { Fragment } from "./fragment";
 import pkg from "../package.json";
 import { FRAGMENT_NODE } from "./data";
 import { render } from "./render";
-import type {
-  VNode,
-  Props,
-  Component,
-  FragmentProps,
-  FragmentType,
-  HTMLAttributes,
-} from "./types";
+import type { VNode, Props, Component, FragmentProps } from "./types";
+import { FragmentType, HTMLAttributes, VNodeChildren } from "./types";
 
 // 添加全局变量
 if (window && typeof window === "object") {
@@ -22,14 +16,8 @@ if (window && typeof window === "object") {
 export { h, Fragment, render };
 
 // 导出类型
-export type {
-  VNode,
-  Props,
-  Component,
-  FragmentProps,
-  FragmentType,
-  HTMLAttributes,
-};
+export type { VNode, Props, Component, FragmentProps };
+export type { FragmentType, HTMLAttributes, VNodeChildren };
 
 // 导出 Fragment Symbol
 export { FRAGMENT_NODE };
