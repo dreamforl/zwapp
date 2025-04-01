@@ -45,11 +45,9 @@ function createDom(vnode: VNodeChildren) {
 // 这里需要实现虚拟 DOM 到真实 DOM 的转换逻辑
 // 包括处理组件实例化、DOM 元素创建、属性更新等
 export function render(vnode: VNodeChildren, container: HTMLElement) {
-  console.log("vnode:", vnode);
   if (!vnode) return;
   if (typeof vnode === "object") {
     const dom = createDom(vnode);
-    console.log("vnode?.children:", vnode?.children);
     if (
       isVNode(vnode) &&
       Array.isArray(vnode?.children) &&
