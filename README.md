@@ -62,5 +62,5 @@ render(
 
 1. 现在是全量更新，性能较差，后续使用 diff 比较
 
-2. 会暴露h和Fragment到window上面
+2. 会暴露h和Fragment到window上面，后续考虑使用插件来解决
 
