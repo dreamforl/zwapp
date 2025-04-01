@@ -1,7 +1,8 @@
-import { h, render } from "./h";
+import { h } from "./h";
 import { Fragment } from "./fragment";
 import pkg from "../package.json";
 import { FRAGMENT_NODE } from "./data";
+import { render } from "./render";
 import type {
   VNode,
   Props,
