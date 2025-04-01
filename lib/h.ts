@@ -36,5 +36,3 @@ export const h: HType = (type, props, ...children: any[]): VNode => {
     children: normalizedChildren,
   };
 };
-
-
