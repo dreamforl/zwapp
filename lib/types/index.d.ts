@@ -3,7 +3,7 @@ export interface HTMLAttributes {
   className?: string;
   id?: string;
   style?: { [key: string]: string | number };
-  onClick?: (e: any) => void;
+  // onClick?: (e: any) => void;
   [key: string]: any;
 }
 
@@ -19,7 +19,7 @@ export interface Props extends HTMLAttributes {
 export type VNodeType = string | symbol | Function;
 export interface VNode {
   type: VNodeType;
-  props: Props;
+  props?: Props;
   children?: VNodeChildren | VNodeChildren[];
 }
 
