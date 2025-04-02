@@ -1,5 +1,38 @@
 ## zwapp
 
+### 安装
+
+```shell
+pnpm add zwapp vite-plugin-zwapp
+```
+
+### 配置
+
+#### tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+  }
+}
+```
+
+#### vite.config.ts
+
+```ts
+import { defineConfig } from "vite";
+import zwapp from "vite-plugin-zwapp";
+
+export default defineConfig({
+  plugins: [zwapp()],
+});
+```
+
+
+
 包含 h、Fragment、还有基础的render函数，以及版本信息version。
 
 使用jsx语法，只需要在tsconfig.json中配置即可
@@ -61,6 +94,4 @@ render(
 ### 不足
 
 1. 现在是全量更新，性能较差，后续使用 diff 比较
-
-2. 会暴露h和Fragment到window上面，后续考虑使用插件来解决
 

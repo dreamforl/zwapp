@@ -6,12 +6,6 @@ import { render } from "./render";
 import type { VNode, Props, Component, FragmentProps } from "./types";
 import { FragmentType, HTMLAttributes, VNodeChildren } from "./types";
 
-// 添加全局变量
-if (window && typeof window === "object") {
-  window.h = h;
-  window.Fragment = Fragment;
-}
-
 // 导出核心 API
 export { h, Fragment, render };
 
