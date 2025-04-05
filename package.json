@@ -16,8 +16,8 @@
     "url": "gitee+https://gitee.com/zaoanmiao/zwapp.git"
   },
   "scripts": {
-    "dev": "rollup -wc",
-    "build": "rollup -c",
+    "dev": "cross-env ZWAPP_ENV=dev rollup -wc",
+    "build": "cross-env ZWAPP_ENV=build rollup -c",
     "commit": "git-cz"
   },
   "keywords": [
@@ -40,6 +40,7 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/node": "^20.11.28",
     "commitizen": "^4.2.4",
+    "dotenv": "^16.4.7",
     "rimraf": "^6.0.1",
     "rollup": "^2.61.1",
     "rollup-plugin-copy": "^3.5.0",
@@ -52,6 +53,7 @@
     }
   },
   "dependencies": {
-    "@rollup/plugin-node-resolve": "^16.0.1"
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "cross-env": "^7.0.3"
   }
 }

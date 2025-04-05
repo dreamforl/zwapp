@@ -1,15 +1,12 @@
+import path from "path";
+import { clearBuild } from "./config/clear.ts";
+import { envPathData } from "./config/data.ts";
 import config from "./config/rollup.config.ts";
+import dotenv from "dotenv";
 export default async function build() {
-  await new Promise((resolve, reject) => {
-    const child_process = require("child_process");
-    child_process.exec("npx rimraf dist", (error) => {
-      if (error) {
-        console.error(`exec error: ${error}`);
-        reject(error);
-        return;
-      }
-      resolve(0);
-    });
-  });
+  const env = process.env.ZWAPP_ENV || "dev";
+  const envPath = path.join(__dirname, envPathData[env]);
+  dotenv.config({ path: envPath });
+  await clearBuild();
   return config;
 }
