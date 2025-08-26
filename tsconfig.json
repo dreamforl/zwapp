@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "composite": true,
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
@@ -19,7 +20,7 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
     "typeRoots": ["./node_modules/@types", "./lib/types"],
-    "rootDir": "./lib"
+    "rootDir": "./lib",
   },
   "include": ["lib/**/*"],
   "exclude": ["node_modules", "dist"]
