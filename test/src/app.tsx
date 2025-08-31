@@ -20,7 +20,7 @@ export const App = () => {
   const [count, setCount] = useState(1);
   const [time, setTime] = useState(new Date().toLocaleString());
   return (
-    <div className="app">
+    <div className="TEMP">
       <h1>好</h1>
       <div className="box">
         <div className="item">子元素</div>
@@ -30,7 +30,7 @@ export const App = () => {
         <button onClick={() => setTime(new Date().toLocaleString())}>
           修改时间
         </button>
-        <C></C>
+        {/* <C></C> */}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Fiber } from "./fiber";
+import { changeCurrentFiber, Fiber } from "./fiber";
 import { VNode } from "./types";
 import { reconcile } from "./reconcile";
 import { FRAGMENT_NODE, TEXT_NODE } from "./data";
@@ -51,7 +51,7 @@ function workLoop(deadline: IdleDeadline) {
 
 // 执行一个工作单元
 function performUnitOfWork(fiber: Fiber): Fiber | null {
-  // 如果没有 DOM 节点，创建一个
+  // 如果没有 DOM 节点，根据节点类型创建对应的 DOM 元素
   if (!fiber.dom) {
     if (fiber.type === FRAGMENT_NODE) {
       fiber.dom = document.createDocumentFragment();
@@ -60,12 +60,34 @@ function performUnitOfWork(fiber: Fiber): Fiber | null {
     }
   }
 
+  // 根据 effectTag 执行相应操作
+  if (fiber.effectTag && typeof fiber.type === "function") {
+    changeCurrentFiber(fiber);
+    fiber.hookIndex = 0; // 渲染的时候 需要设置hookIndex为0 位置hooks数组
+    const childrenVNode = fiber.type(fiber.props);
+    fiber.child = reconcile(fiber, childrenVNode);
+    switch (fiber.effectTag) {
+      case "UPDATE": {
+        if (fiber.dom instanceof HTMLElement) {
+          updateDomProperties(fiber.dom, {}, fiber.props);
+        }
+        break;
+      }
+      case "DELETE": {
+        // 删除节点的逻辑将在 commitWork 中处理
+        break;
+      }
+      default: {
+      }
+    }
+  }
+
   // 返回下一个工作单元
   // 优先查找子节点
   if (fiber.child) {
     return fiber.child;
   }
-  
+
   // 如果没有子节点，查找兄弟节点
   let nextFiber: Fiber | null = fiber;
   while (nextFiber) {
@@ -153,10 +175,34 @@ function commitWork(fiber: Fiber | null) {
   const parentDom = parentFiber?.dom;
 
   if (fiber.dom && parentDom) {
-    parentDom.appendChild(fiber.dom);
+    switch (fiber.effectTag) {
+      case "CREATE": {
+        parentDom.appendChild(fiber.dom);
+        break;
+      }
+      case "UPDATE": {
+        console.log("执行更新");
+        break;
+      }
+      case "DELETE": {
+      }
+    }
   }
 
   // 递归提交子节点
   commitWork(fiber.child);
   commitWork(fiber.sibling);
 }
+
+/**
+ * 更新 Fiber 树（计划更新）
+ *
+ */
+export const scheduleUpdate = (fiber: Fiber) => {
+  fiber.alternate = fiber; // 设置缓存
+  while (fiber.parentFiber) {
+    fiber = fiber.parentFiber;
+  }
+  wipRoot = { ...fiber };
+  nextUnitOfWork = fiber;
+};

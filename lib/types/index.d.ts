@@ -19,7 +19,7 @@ export interface Props extends HTMLAttributes {
 export type VNodeType = string | symbol | Function;
 export interface VNode {
   type: VNodeType;
-  props?: Props;
+  props: Props;
   children?: VNodeChildren | VNodeChildren[];
 }
 

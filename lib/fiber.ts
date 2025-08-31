@@ -1,8 +1,10 @@
 import { VNodeType } from "./types";
+import { scheduleUpdate } from "./workLoop";
 let currentFiber: Fiber | null = null;
 let hookIndex = 0;
 
 export const changeCurrentFiber = (fiber: Fiber | null) => {
+  console.log("fiber:", fiber);
   currentFiber = fiber;
 };
 
@@ -17,6 +19,8 @@ export class Fiber {
   alternate: Fiber | null = null; // 用于双缓存
   priority: number = 0; // 任务优先级
   hookIndex = 0; // hook的下标
+  effectTag?: "UPDATE" | "DELETE" | "CREATE" | "COPY" = "CREATE"; // Fiber状态标记
+  key?: string | number;
 
   constructor(type: VNodeType, props: Record<string, unknown> = {}) {
     this.props = props;
@@ -24,7 +28,6 @@ export class Fiber {
     this.parentFiber = null;
     this.dom = null;
     this.hooks = [];
-    changeCurrentFiber(this);
   }
 }
 
@@ -54,7 +57,10 @@ export const useState = <T>(init: T) => {
       } else {
         state = value;
       }
+
       fiber.hooks[index] = [state, setState];
+      fiber.effectTag = "UPDATE";
+      scheduleUpdate(fiber);
     };
     fiber.hooks[index] = [state, setState];
   }
