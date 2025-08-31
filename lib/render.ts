@@ -38,6 +38,12 @@ function createDom(vnode: VNodeChildren) {
       dom.setAttribute(name, value as string);
     }
   });
+  // 渲染子组件
+  if (Array.isArray(vnode.children) && vnode.children.length > 0) {
+    vnode.children.forEach((item) => {
+      render(item, dom);
+    });
+  }
   return dom;
 }
 

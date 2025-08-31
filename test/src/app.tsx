@@ -1,3 +1,12 @@
+import zwapp from "zwapp";
+function B(props: { name: string }) {
+  return <h1>b-{props.name}</h1>;
+}
 export const App = () => {
-  return <h1>app</h1>;
+  console.log("version:", zwapp.version);
+  return (
+    // <div className="app">
+    // </div>
+      <B name="张三"></B>
+  );
 };

@@ -21,13 +21,13 @@ export const h: HType = (type, props, ...children: any[]): VNode => {
 
   const normalizedChildren = children
     .flat()
-    .map((child) =>
-      child == null || child === false
+    .map((child) => {
+      return child == null || child === false || child === true
         ? null
         : typeof child === "string" || typeof child === "number"
         ? createTextVNode(child)
-        : child
-    )
+        : child;
+    })
     .filter(Boolean);
 
   return {
