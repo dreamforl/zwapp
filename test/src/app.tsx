@@ -5,8 +5,9 @@ function B(props: { name: string }) {
 export const App = () => {
   console.log("version:", zwapp.version);
   return (
-    // <div className="app">
-    // </div>
+    <div className="app">
+      <h1>a-{zwapp.version}</h1>
       <B name="张三"></B>
+    </div>
   );
 };
