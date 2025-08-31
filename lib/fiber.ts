@@ -1,6 +1,11 @@
 import { VNodeType } from "./types";
 let currentFiber: Fiber | null = null;
 let hookIndex = 0;
+
+export const changeCurrentFiber = (fiber: Fiber | null) => {
+  currentFiber = fiber;
+};
+
 export class Fiber {
   props: Record<string, unknown>;
   parentFiber: Fiber | null; // 父 Fiber 节点
@@ -11,28 +16,48 @@ export class Fiber {
   child: Fiber | null = null; // 当前 Fiber 节点的第一个子节点（直接子元素）
   alternate: Fiber | null = null; // 用于双缓存
   priority: number = 0; // 任务优先级
-  
+  hookIndex = 0; // hook的下标
+
   constructor(type: VNodeType, props: Record<string, unknown> = {}) {
     this.props = props;
     this.type = type;
     this.parentFiber = null;
     this.dom = null;
-    currentFiber = this;
     this.hooks = [];
+    changeCurrentFiber(this);
   }
 }
 
+type SetStateParams<T> = T | ((prevState: T) => T);
+type SetState<T> = (v: SetStateParams<T>) => void;
+
+/**
+ * 没处理存储函数的情况，可以根据init来判断
+ *
+ */
 export const useState = <T>(init: T) => {
-//   const fiber = currentFiber;
-//   if (!fiber) {
-//     throw new Error("没有fiber");
-//   }
-//   const key = `hook-${hookIndex++}`;
-//   const state = fiber.state?.[key] || init;
-//   return [
-//     state,
-//     (value: T) => {
-//       fiber.state![key] = value;
-//     },
-//   ] as const;
+  let setState: SetState<T>;
+  let state: T = init;
+  const fiber = currentFiber;
+  if (!fiber) {
+    throw new Error("没有fiber");
+  }
+  const index = fiber.hookIndex;
+  let preHook = fiber.hooks[index];
+  if (preHook) {
+    [state, setState] = preHook as [T, SetState<T>];
+  } else {
+    setState = (value: SetStateParams<T>) => {
+      if (typeof value === "function") {
+        const result = (value as (prevState: T) => T)(state);
+        state = result;
+      } else {
+        state = value;
+      }
+      fiber.hooks[index] = [state, setState];
+    };
+    fiber.hooks[index] = [state, setState];
+  }
+  fiber.hookIndex++;
+  return [state, setState] as const;
 };

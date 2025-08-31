@@ -1,4 +1,4 @@
-import { render, h, Fragment } from "zwapp";
+import { render } from "zwapp";
 import { App } from "./app";
 const root = document.getElementById("app")!;
-render(App(), root);
+render(<App></App>, root);

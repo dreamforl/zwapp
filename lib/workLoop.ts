@@ -22,7 +22,6 @@ export function createRoot(vdom: VNode, container: HTMLElement) {
 
   // 开始将 vdom 转换为 Fiber 树
   const childFiber = reconcile(rootFiber, vdom);
-  console.log("childFiber:", childFiber);
   rootFiber.child = childFiber;
 
   // 开始工作循环

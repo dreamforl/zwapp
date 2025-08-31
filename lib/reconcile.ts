@@ -7,6 +7,14 @@ import { isVNode } from "./utils/type";
  *
  */
 export const reconcile = (parentFiber: Fiber, vdom: VNode): Fiber => {
+  // 处理函数组件
+  if (typeof vdom.type === 'function') {
+    // 执行函数组件得到实际的 vdom
+    const result = vdom.type(vdom.props);
+    // 使用函数返回的 vdom 继续 reconcile
+    return reconcile(parentFiber, result);
+  }
+
   // 创建新的 fiber 节点
   const fiber = new Fiber(vdom.type, vdom.props);
   fiber.parentFiber = parentFiber;
