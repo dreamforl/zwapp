@@ -59,18 +59,32 @@ function performUnitOfWork(fiber: Fiber): Fiber | null {
       fiber.dom = createDomElement(fiber);
     }
   }
-
-  // 根据 effectTag 执行相应操作
-  if (fiber.effectTag && typeof fiber.type === "function") {
+  if (typeof fiber.type === "function") {
     changeCurrentFiber(fiber);
-    fiber.hookIndex = 0; // 渲染的时候 需要设置hookIndex为0 位置hooks数组
     const childrenVNode = fiber.type(fiber.props);
     fiber.child = reconcile(fiber, childrenVNode);
+    fiber.hookIndex = 0; // 渲染的时候 需要设置hookIndex为0 位置hooks数组
+  }
+  // 根据 effectTag 执行相应操作
+  if (fiber.effectTag) {
     switch (fiber.effectTag) {
       case "UPDATE": {
         if (fiber.dom instanceof HTMLElement) {
-          updateDomProperties(fiber.dom, {}, fiber.props);
+          updateDomProperties(
+            fiber.dom,
+            fiber.alternate?.props || {},
+            fiber.props
+          );
         }
+        if (fiber.type === TEXT_NODE && fiber.dom instanceof Text) {
+          // 对比新旧文本内容
+          const oldValue = fiber.alternate?.props.nodeValue || "";
+          const newValue = fiber.props.nodeValue || "";
+          if (oldValue !== newValue) {
+            fiber.dom.nodeValue = `${newValue}`; // 直接更新文本内容
+          }
+        }
+        fiber.effectTag = undefined; // 清除标记，避免重复更新
         break;
       }
       case "DELETE": {
@@ -199,10 +213,7 @@ function commitWork(fiber: Fiber | null) {
  *
  */
 export const scheduleUpdate = (fiber: Fiber) => {
-  fiber.alternate = fiber; // 设置缓存
-  while (fiber.parentFiber) {
-    fiber = fiber.parentFiber;
-  }
-  wipRoot = { ...fiber };
+  wipRoot = fiber;
   nextUnitOfWork = fiber;
+  requestIdleCallback(workLoop);
 };
