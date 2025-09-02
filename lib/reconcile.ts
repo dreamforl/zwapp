@@ -53,11 +53,9 @@ const generateFiber = (
     newFiber.alternate = oldFiber;
     newFiber.parentFiber = parentFiber;
     newFiber.dom = oldFiber.dom;
-    console.log(oldFiber.dom);
 
     newFiber.effectTag = "UPDATE";
     newFiber.child = oldFiber.child;
-    newFiber.sibling = oldFiber.sibling;
 
     // 清除缓存
     oldFiber.child = null;
@@ -71,13 +69,6 @@ const generateFiber = (
     newFiber = new Fiber(vdom.type, vdom.props);
     newFiber.parentFiber = parentFiber;
     newFiber.alternate = null;
-    if (parentFiber.effectTag === "UPDATE") {
-      newFiber.effectTag = "UPDATE";
-    }
-    if (typeof newFiber.type === "function") {
-      newFiber.hooks = []; // 全新的 hooks 数组
-      newFiber.hookIndex = 0;
-    }
   }
   return newFiber;
 };
@@ -114,11 +105,8 @@ export const reconcile = (
 
       // 处理剩余的子节点
       let previousSibling = firstChildFiber;
-      for (
-        let i = vdom.children.indexOf(firstValidChild) + 1;
-        i < vdom.children.length;
-        i++
-      ) {
+      let i = vdom.children.indexOf(firstValidChild) + 1;
+      for (; i < vdom.children.length; i++) {
         const vdomItem = vdom.children[i];
         if (isVNode(vdomItem)) {
           const childFiber = reconcile(newFiber, vdomItem, i);

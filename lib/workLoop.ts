@@ -91,6 +91,8 @@ function performUnitOfWork(fiber: Fiber): Fiber | null {
         // 删除节点的逻辑将在 commitWork 中处理
         break;
       }
+      case "CREATE": {
+      }
       default: {
       }
     }
@@ -187,20 +189,8 @@ function commitWork(fiber: Fiber | null) {
   }
 
   const parentDom = parentFiber?.dom;
-
-  if (fiber.dom && parentDom) {
-    switch (fiber.effectTag) {
-      case "CREATE": {
-        parentDom.appendChild(fiber.dom);
-        break;
-      }
-      case "UPDATE": {
-        console.log("执行更新");
-        break;
-      }
-      case "DELETE": {
-      }
-    }
+  if (fiber.dom && parentDom && fiber.effectTag === "CREATE") {
+    parentDom.appendChild(fiber.dom);
   }
 
   // 递归提交子节点

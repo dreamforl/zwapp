@@ -1,36 +1,35 @@
-import zwapp, { useState } from "zwapp";
-function B(props: { name: string }) {
-  return (
-    <div className="b">
-      <h1>b-{props.name}</h1>
-      <C></C>
-    </div>
-  );
-}
-function C() {
+import { useState } from "zwapp";
+function C(props: { click: () => void }) {
   const [count, setCount] = useState(0);
   return (
     <div className="c">
       <h1>c-{count}</h1>
       <button onClick={() => setCount((pre) => pre + 2)}>+2</button>
+      <h1 onClick={props.click}>父组件+1</h1>
     </div>
   );
 }
 export const App = () => {
-  const [count, setCount] = useState(1);
-  const [time, setTime] = useState(new Date().toLocaleString());
+  const [list, setList] = useState<string[]>(["1"]);
+  console.log("list:", list);
+  console.log("渲染子");
   return (
-    <div className="TEMP">
+    <div className="TEMP" key="1">
       <h1>好</h1>
       <div className="box">
-        <div className="item">子元素</div>
-        <h1>count-{count}</h1>
-        <button onClick={() => setCount((pre) => pre + 1)}>+1</button>
-        <h1>time-{time}</h1>
-        <button onClick={() => setTime(new Date().toLocaleString())}>
-          修改时间
+        <button
+          className="item"
+          onClick={() => setList((prev) => [...prev, `${prev.length + 1}`])}
+        >
+          子元素
         </button>
-        {/* <C></C> */}
+        {list.map((item, index) => {
+          return (
+            <div className="item" key={index}>
+              {item}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

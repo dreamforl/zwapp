@@ -1,15 +1,14 @@
-import { VNodeType } from "./types";
+import { Props, VNodeType } from "./types";
 import { scheduleUpdate } from "./workLoop";
 let currentFiber: Fiber | null = null;
 let hookIndex = 0;
 
 export const changeCurrentFiber = (fiber: Fiber | null) => {
-  console.log("fiber:", fiber);
   currentFiber = fiber;
 };
 
 export class Fiber {
-  props: Record<string, unknown>;
+  props: Props;
   parentFiber: Fiber | null; // 父 Fiber 节点
   dom: HTMLElement | Text | DocumentFragment | null;
   hooks: Array<unknown>;
@@ -22,12 +21,13 @@ export class Fiber {
   effectTag?: "UPDATE" | "DELETE" | "CREATE" | "COPY" = "CREATE"; // Fiber状态标记
   key?: string | number;
 
-  constructor(type: VNodeType, props: Record<string, unknown> = {}) {
+  constructor(type: VNodeType, props: Props = {}) {
     this.props = props;
     this.type = type;
     this.parentFiber = null;
     this.dom = null;
     this.hooks = [];
+    this.key = props?.key;
   }
 }
 

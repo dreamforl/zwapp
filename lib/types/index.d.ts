@@ -3,13 +3,14 @@ export interface HTMLAttributes {
   className?: string;
   id?: string;
   style?: { [key: string]: string | number };
-  // onClick?: (e: any) => void;
-  [key: string]: any;
+  key?: string | number;
+  onClick?: (e: MouseEvent) => void;
+  [key: string]: unknown;
 }
 
 // 基础节点类型
 export type ElementType = string | number | boolean | null | undefined;
-export type VNodeChildren = VNode | ElementType;
+export type VNodeChildren = VNode | ElementType | VNodeChildren[];
 
 // Props 类型
 export interface Props extends HTMLAttributes {
@@ -34,7 +35,10 @@ export type FragmentType = {
 };
 
 export type Component<P = {}> = (
-  props: P & { children?: VNodeChildren | VNodeChildren[] }
+  props: P & {
+    children?: VNodeChildren | VNodeChildren[];
+    key?: string | number;
+  }
 ) => VNode;
 
 // 全局变量声明
